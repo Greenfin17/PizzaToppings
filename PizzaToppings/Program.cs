@@ -19,23 +19,12 @@ namespace PizzaToppings
            // Pizza pizzaObj= JsonConvert.DeserializeObject<Pizza>(pizzaJson);
            pizzaList = JsonConvert.DeserializeObject<List<Pizza>>(File.ReadAllText(@"..\..\..\Data\pizzas.json"));
 
-            using (StreamReader file = File.OpenText(@"..\..\..\Data\pizzas.json"))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-                pizzaList2 = (List<Pizza>)serializer.Deserialize(file, typeof(List<Pizza>));
-            }
 
             foreach(var pizza in pizzaList)
             {
                 Console.WriteLine(String.Join(", ", pizza.toppings));
             }
-            foreach(var pizza in pizzaList2)
-            {
-                Console.WriteLine(pizza);
-            }
 
-
-            Console.WriteLine("Hello World!");
         }
     }
 }
