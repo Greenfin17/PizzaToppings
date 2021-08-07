@@ -10,8 +10,9 @@ namespace PizzaToppings.Food
     {
         public List<string> toppings { get; set; }
 
+        // Newtonsoft doesn't work with this constructor.
         /*
-        public Pizza(IList<string> toppingList)
+        public Pizza(List<string> toppingList)
         {
             toppings= new List<string>();
             foreach(var topping in toppingList)
@@ -20,10 +21,17 @@ namespace PizzaToppings.Food
             }
         }
         */
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+            Pizza objasPizza = obj as Pizza;
+            if (objasPizza == null) return false;
+            else return Equals(objasPizza);
+        }
         public bool Equals(Pizza cmpPizza)
         {
-            if (cmpPizza == null)
-            {
+            int i = 0;
+            if (cmpPizza == null) {
                 return false;
             }
 
@@ -35,7 +43,7 @@ namespace PizzaToppings.Food
             {
                 var thisUniqueList = toppings.Distinct().OrderBy(toppings => toppings);
                 var cmpUniqueList = cmpPizza.toppings.Distinct().OrderBy(toppings => toppings);
-                for ( int i = 0 ; i < thisUniqueList.Count(); i++)
+                for ( i = 0 ; i < thisUniqueList.Count(); i++)
                 {
                     if (String.Compare(thisUniqueList.ElementAt(i),  cmpUniqueList.ElementAt(i)) != 0)
                     {
@@ -46,6 +54,7 @@ namespace PizzaToppings.Food
             }
             return true;
         }
+
         public override int GetHashCode()
         {
             int hashToppings = toppings == null ? 0 : toppings.GetHashCode();

@@ -10,38 +10,37 @@ namespace PizzaToppings
 {
     class Program
     {
+        static bool IsUnique(ref List<ToppingCollection> uTL, List<string> pizzaToppings)
+        {
+            pizzaToppings.Sort();
+            bool returnVal = true;
+            int i;
+            for (int j = 0; j < uTL.Count; j++)
+            {
+                if (uTL[j].Toppings.Count() == pizzaToppings.Count())
+                {
+                    for (i = 0; i < pizzaToppings.Count(); i++)
+                    {
+                        if (uTL[j].Toppings[i] != pizzaToppings[i])
+                        {
+                            break;
+                        }
+                    }
+                    if (i == pizzaToppings.Count())
+                    {
+                        returnVal = false;
+                        uTL[j].Count++;
+                        break;
+                    }
+                }
+            }
+            return returnVal;
+        }
         static void Main(string[] args)
         {
 
             List<Pizza> pizzaList = new List<Pizza>();
             pizzaList = JsonConvert.DeserializeObject<List<Pizza>>(File.ReadAllText(@"..\..\..\Data\pizzas.json"));
-
-            bool IsUnique(ref List<ToppingCollection> uTL, List<string> pizzaToppings)
-            {
-                pizzaToppings.Sort();
-                bool returnVal = true;
-                int i;
-                for (int j = 0; j < uTL.Count; j++)
-                {
-                    if (uTL[j].Toppings.Count() == pizzaToppings.Count())
-                    {
-                        for (i = 0; i < pizzaToppings.Count(); i++)
-                        {
-                            if (uTL[j].Toppings[i] != pizzaToppings[i])
-                            {
-                                break;
-                            }
-                        }
-                        if (i == pizzaToppings.Count())
-                        {
-                            returnVal = false;
-                            uTL[j].Count++;
-                            break;
-                        }
-                    }
-                }
-                return returnVal;
-            }
 
             // Find unique topping combinations
             List<ToppingCollection> uniqueToppingsList = new List<ToppingCollection>();
